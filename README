@@ -1,0 +1,19 @@
+# Gmail Educational Clone Panel (th2025)
+
+**⚠️  DISCLAIMER – Educational Use Only**  
+This repository is provided exclusively for:
+
+- Penetration-testing labs on **your own machines**  
+- CTF platforms / ethical-hacking courses  
+- Demonstrating web-phishing techniques defensively
+
+Any contrary use **against real users or without explicit authorization is illegal**.  
+The author accepts **no liability** for misuse.
+
+## Quick Start
+
+```bash
+git clone https://github.com/<you>/th2025.git
+cd th2025
+chmod +x start.sh
+./start.sh
